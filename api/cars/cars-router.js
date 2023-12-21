@@ -9,9 +9,10 @@ const {checkCarId, checkCarPayload, checkVinNumberUnique, checkVinNumberValid} =
 router.get("/", (req, res, next) => {
   Car.getAll()
   .then(cars => {
+    console.log("getAll from cars-router has ran")
     res.status(200).json(cars)
   })
-  .else(error => {
+  .catch(error => {
     next(error)
   })
 })
