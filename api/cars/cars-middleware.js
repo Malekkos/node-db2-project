@@ -17,6 +17,18 @@ const checkCarId = (req, res, next) => {
 
 const checkCarPayload = (req, res, next) => {
   // DO YOUR MAGIC
+  //Assuming its under payload
+  const vin = req.body.vin
+  const make = req.body.make
+  const model = req.body.model
+  const mileage = req.body.mileage
+  if (!vin || !make || !model || !mileage) {
+    res.status(400).json({
+      message: `` //revisit, not sure how to determine which field is missing
+    })
+  } else {
+    next()
+  }
 }
 
 const checkVinNumberValid = (req, res, next) => {
