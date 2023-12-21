@@ -2,14 +2,15 @@ const db = require("../../data/db-config")
 const Car = require("./cars-model")
 const vinValidator = require('vin-validator');
 
-const checkCarId = (req, res, next) => {
+const checkCarId = async (req, res, next) => {
   // DO YOUR MAGIC
   const id = req.params.id;
-  const car = Car.getById(id)
+  const car = await Car.getById(id)
+  const error = { status: 404 }
+  console.log(car)
   if (!car) {
-    res.status(404).json({
-      message: `car with id ${id} is not found`
-    })
+    error.message = `car with id ${id} is not found`
+    next(error)
   } else {
     req.id = id
     next()
