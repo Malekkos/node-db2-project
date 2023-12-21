@@ -9,6 +9,9 @@ const checkCarId = (req, res, next) => {
     res.status(404).json({
       message: `car with id ${id} is not found`
     })
+  } else {
+    req.id = id
+    next()
   }
 }
 
