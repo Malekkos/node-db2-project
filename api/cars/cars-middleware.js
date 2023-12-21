@@ -1,5 +1,6 @@
 const db = require("../../data/db-config")
 const Car = require("./cars-model")
+const vinValidator = require('vin-validator');
 
 const checkCarId = (req, res, next) => {
   // DO YOUR MAGIC
@@ -33,10 +34,18 @@ const checkCarPayload = (req, res, next) => {
 
 const checkVinNumberValid = (req, res, next) => {
   // DO YOUR MAGIC
+  const vin = req.body.vin
+  const isValidVin = vinValidator.validate(vin)
+  if(isValidVin === false) {
+    res.status(400).json({
+      message: `vin ${vin} is invalid`
+    })
+  } 
 }
 
 const checkVinNumberUnique = (req, res, next) => {
   // DO YOUR MAGIC
+  
 }
 
 module.exports = { checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique }
