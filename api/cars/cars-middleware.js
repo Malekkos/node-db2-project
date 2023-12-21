@@ -40,12 +40,23 @@ const checkVinNumberValid = (req, res, next) => {
     res.status(400).json({
       message: `vin ${vin} is invalid`
     })
-  } 
+  } else {
+    next()
+  }
 }
 
 const checkVinNumberUnique = (req, res, next) => {
   // DO YOUR MAGIC
-  
+  const vin = req.body.vin
+  const id = req.params.id
+  const car = Car.getById(id)
+  if (car.vin === vin) {
+    res.status(400).json({
+      message: `vin ${vin} already exists`
+    })
+  } else {
+    next()
+  }
 }
 
 module.exports = { checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique }
