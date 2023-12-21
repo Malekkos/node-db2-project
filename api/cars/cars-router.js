@@ -28,6 +28,22 @@ router.get("/:id", checkCarId, (req, res, next) => {
   })
 })
 
+router.post("/", checkCarPayload, checkVinNumberUnique, checkVinNumberValid, (req, res, next) => {
+  console.log("I am in post")
+  const newCar = req.body
+  Car.create(newCar)
+  .then(car => {
+    console.log(car)
+    Car.getById(car)
+    .then(car => {
+      res.status(200).json(car)
+    })
+  })
+  .catch(error => {
+    next(error)
+  })
+})
+
 
 router.use((error, req, res, next) => { // eslint-disable-line
   res.status(error.status || 500).json({
