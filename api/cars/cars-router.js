@@ -28,7 +28,7 @@ router.get("/:id", checkCarId, (req, res, next) => {
   })
 })
 
-router.post("/", checkCarPayload, checkVinNumberUnique, checkVinNumberValid, (req, res, next) => {
+router.post("/", checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (req, res, next) => {
   console.log("I am in post")
   const newCar = req.body
   Car.create(newCar)
