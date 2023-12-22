@@ -64,6 +64,7 @@ const checkVinNumberUnique = async (req, res, next) => {
   // DO YOUR MAGIC
   const vin = req.body.vin
   const id = req.params.id
+  console.log("about to get the car!")
   const car = await Car.getById(id)
   console.log("this is the car", car)
   if (car.vin === vin) {
