@@ -19,9 +19,7 @@ const create = async (car) => {
 }
 
 const getByVin = async (vin) => {
-  console.log(vin)
   const result = await db("cars").where({"vin": vin}).first()
-  console.log("this is the result of gettingbyVIn", result)
   return result
 }
 

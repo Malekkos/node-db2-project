@@ -1,5 +1,3 @@
-// DO YOUR MAGIC
-
 const router = require("express").Router()
 const Car = require("./cars-model")
 
@@ -9,7 +7,6 @@ const {checkCarId, checkCarPayload, checkVinNumberUnique, checkVinNumberValid} =
 router.get("/", (req, res, next) => {
   Car.getAll()
   .then(cars => {
-    // console.log("getAll from cars-router has ran")
     res.status(200).json(cars)
   })
   .catch(error => {
@@ -18,7 +15,6 @@ router.get("/", (req, res, next) => {
 })
 
 router.get("/:id", checkCarId, (req, res, next) => {
-  // console.log(req.id) // works
   Car.getById(req.id)
   .then(car => {
     res.status(200).json(car)
@@ -29,11 +25,9 @@ router.get("/:id", checkCarId, (req, res, next) => {
 })
 
 router.post("/", checkCarPayload, checkVinNumberValid, checkVinNumberUnique, (req, res, next) => {
-  console.log("I am in post")
   const newCar = req.body
   Car.create(newCar)
   .then(car => {
-    console.log(car)
     Car.getById(car)
     .then(car => {
       res.status(200).json(car)
