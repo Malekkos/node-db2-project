@@ -1,13 +1,10 @@
-const db = require("../../data/db-config")
 const Car = require("./cars-model")
 const vinValidator = require('vin-validator');
 
 const checkCarId = async (req, res, next) => {
-  // DO YOUR MAGIC
   const id = req.params.id;
   const car = await Car.getById(id)
   const error = { status: 404 }
-  console.log(car)
   if (!car) {
     error.message = `car with id ${id} is not found`
     next(error)
@@ -18,16 +15,12 @@ const checkCarId = async (req, res, next) => {
 }
 
 const checkCarPayload = (req, res, next) => {
-  // DO YOUR MAGIC
-  //Assuming its under payload
   const vin = req.body.vin
   const make = req.body.make
   const model = req.body.model
   const mileage = req.body.mileage
   const error = { status: 400 }
-  console.log(vin, make, model, mileage)
   if (!vin) {
-    console.log("There is an error in check car payload")
     error.message = "vin is missing"
     next(error)
   } else if (!make) {
@@ -46,12 +39,9 @@ const checkCarPayload = (req, res, next) => {
 }
 
 const checkVinNumberValid = (req, res, next) => {
-  // DO YOUR MAGIC
   const vin = req.body.vin
   const isValidVin = vinValidator.validate(vin)
-  console.log("we are in checkVinNumberValid")
   if(isValidVin === false) {
-    console.log("something terrible in checkvinnumbervalid")
     res.status(400).json({
       message: `vin ${vin} is invalid`
     })
@@ -61,12 +51,9 @@ const checkVinNumberValid = (req, res, next) => {
 }
 
 const checkVinNumberUnique = async (req, res, next) => {
-  // DO YOUR MAGIC
   const vin = req.body.vin
-  console.log("about to get the car!")
   const car = await Car.getByVin(vin)
   const error = { status: 400 }
-  console.log("this is the car", car)
   if (!car) {
     error.message = `vin ${vin} already exists`
     next(error)
