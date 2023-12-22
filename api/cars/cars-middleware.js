@@ -41,7 +41,7 @@ const checkCarPayload = (req, res, next) => {
 const checkVinNumberValid = (req, res, next) => {
   const vin = req.body.vin
   const isValidVin = vinValidator.validate(vin)
-  if(isValidVin === false) {
+  if(!isValidVin) {
     res.status(400).json({
       message: `vin ${vin} is invalid`
     })
@@ -54,7 +54,8 @@ const checkVinNumberUnique = async (req, res, next) => {
   const vin = req.body.vin
   const car = await Car.getByVin(vin)
   const error = { status: 400 }
-  if (!car) {
+  console.log(car)
+  if (car) {
     error.message = `vin ${vin} already exists`
     next(error)
   } else {
